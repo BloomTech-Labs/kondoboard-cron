@@ -14,5 +14,9 @@ This repo contains the extract, transform, load application for Kondoboard, a pl
 
 ## Diagrams
 We created C4 diagrams to communicate the software architecture
+
+
 ![Context](./diagrams/kondo_context.svg)
+
+
 ![Container](./diagrams/kondo_container.svg)
