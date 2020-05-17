@@ -20,5 +20,14 @@ We created C4 diagrams to communicate the software architecture
 ### Container
 ![Container](./diagrams/kondo_container.svg)
 
+## Install
+``
+
+## Usage
+``
+
+## Testing
+``
+
 ## License
-![License](./LICENSE)
+![License](./LICENSE/)
