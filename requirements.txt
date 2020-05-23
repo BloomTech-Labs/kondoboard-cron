@@ -1,0 +1,6 @@
+python-dotenv
+pandas
+arrow
+beautifulsoup4
+requests
+flatten-dict
