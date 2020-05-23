@@ -16,20 +16,21 @@ def request_to_df():
                             app_id={app_id}&
                             app_key={api_key}&
                             results_per_page=20&
-                            what=data&
-                            content-type=application/json""")
-    return request
+                            what=data%20engineer&
+                            content-type=application/json""").json()
 
-    # # flatten 
-    # flattened_results =[
-    #     flatten(result, reducer="underscore")
-    #     for result in 
-    #     request['results']
-    # ]
+    # flatten nested objects
+    flattened_results =[
+        flatten(result, reducer="underscore")
+        for result in 
+        request['results']
+    ]
 
-    # df = pd.DataFrame.from_dict(flattened_results)
+    # turn into dataframe
+    df = pd.DataFrame.from_dict(flattened_results)
 
-    # df = df[['id', 'redirect_url', 'title', 'title', 'category_tag', 'description', 'created', 'location_area', 'latitude', 'longitude']]
-    # df.columns = ['id', 'post_url', 'title', 'title_keyword', 'tags', 'description', 'publication_date', 'location', 'latitude', 'longitude']
+    # rename columns
+    df = df[['id', 'redirect_url', 'title', 'title', 'category_tag', 'description', 'created', 'location_area', 'latitude', 'longitude']]
+    df.columns = ['id', 'post_url', 'title', 'title_keyword', 'tags', 'description', 'publication_date', 'location', 'latitude', 'longitude']
 
-    # return df
+    return df
