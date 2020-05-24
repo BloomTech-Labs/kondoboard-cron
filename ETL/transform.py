@@ -1,4 +1,5 @@
 import arrow
+from bs4 import BeautifulSoup
 
 def keyword(text):
     """
@@ -35,7 +36,7 @@ def adzuna_id(text):
     """
     return "A" + str(text)
 
-def transform(df):
+def transform_df(df):
     
     # insert date column
     df['inserted_date'] = arrow.utcnow().format("YYYY-MM-DD")
