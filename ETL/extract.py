@@ -32,5 +32,4 @@ def request_to_df():
     # rename columns
     df = df[['id', 'redirect_url', 'title', 'title', 'category_tag', 'description', 'created', 'location_area', 'latitude', 'longitude']]
     df.columns = ['id', 'post_url', 'title', 'title_keyword', 'tags', 'description', 'publication_date', 'location', 'latitude', 'longitude']
-
     return df
