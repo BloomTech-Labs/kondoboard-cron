@@ -27,6 +27,7 @@ def format_date(text):
     time = time.format('YYYY-MM-DD')
     return time
 
+# TODO:
 # this funciton needs to be changed so that it can check for the
 # API that we have and change it based on that.. just not sure
 # how that works with the apply funciton. don't want to have parameters?
@@ -36,8 +37,15 @@ def adzuna_id(text):
     """
     return "A" + str(text)
 
+
+# TODO:
+# Change it so that we have a list of the columns that need 
+# the specific functions applied to them so that we can just add them
+# to each one
 def transform_df(df):
-    
+    """
+    Takes in dataframe, applies functions to correct columns
+    """
     # insert date column
     df['inserted_date'] = arrow.utcnow().format("YYYY-MM-DD")
 

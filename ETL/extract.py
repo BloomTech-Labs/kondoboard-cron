@@ -12,6 +12,9 @@ api_key = os.getenv("API_KEY")
 
 print(app_id, api_key)
 
+# TODO:
+# Change the request to cover many different types of jobs... not just data engineer
+
 def request_to_df():
     # make API call
     request = requests.get(f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={app_id}&app_key={api_key}&results_per_page=20&what=data%20engineer&content-type=application/json")
@@ -31,6 +34,3 @@ def request_to_df():
     df = df[['id', 'redirect_url', 'title', 'title', 'category_tag', 'description', 'created', 'location_area', 'latitude', 'longitude']]
     df.columns = ['id', 'post_url', 'title', 'title_keyword', 'tags', 'description', 'publication_date', 'location', 'latitude', 'longitude']
     return df
-
-# from pprint import pprint
-# pprint(request_to_df())
