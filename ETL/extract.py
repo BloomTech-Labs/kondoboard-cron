@@ -10,8 +10,6 @@ load_dotenv()
 app_id = os.getenv("APP_ID")
 api_key = os.getenv("API_KEY")
 
-print(app_id, api_key)
-
 # TODO:
 # Change the request to cover many different types of jobs... not just data engineer
 

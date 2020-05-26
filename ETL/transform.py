@@ -42,6 +42,11 @@ def adzuna_id(text):
 # Change it so that we have a list of the columns that need 
 # the specific functions applied to them so that we can just add them
 # to each one
+
+# ex: 
+# col_to_remove_html = ['title', 'title_keyword', 'description']
+# for col in col_to_remove_html:
+#     df[col] = df[col].apply(remove_html)
 def transform_df(df):
     """
     Takes in dataframe, applies functions to correct columns
@@ -55,6 +60,7 @@ def transform_df(df):
     # remove HTML from columns
     df['title'] = df['title'].apply(remove_html)
     df['title_keyword'] = df['title_keyword'].apply(remove_html)
+    df['description'] = df['description'].apply(remove_html)
 
     # transforms date columns
     df['publication_date'] = df['publication_date'].apply(format_date)
