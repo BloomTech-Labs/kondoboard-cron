@@ -8,9 +8,12 @@ This repo contains the extract, transform, load application for Kondoboard, a pl
 - [Install](#install) 
 - [Usage](#usage)
 - [Testing](#testing)
+- [API](#api)
 - [License](#license)
 
 ## Background
+```
+```
 
 ## Diagrams
 We created C4 diagrams to communicate the software architecture
