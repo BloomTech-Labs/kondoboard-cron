@@ -47,9 +47,6 @@ def transform_df(df):
     # insert date column
     df["inserted_date"] = arrow.utcnow().format("YYYY-MM-DD")
 
-    # transform ID column
-    df["id"] = df["id"].apply(adzuna_id)
-
     # remove HTML from columns
     df["title"] = df["title"].apply(remove_html)
     df["title_keyword"] = df["title_keyword"].apply(remove_html)
