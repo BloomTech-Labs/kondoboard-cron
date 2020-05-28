@@ -86,6 +86,58 @@ def adzuna():
     return df
 
 
+def jobsearcher():
+    """
+    Funciton to make API calls to Jobsearcher.com API
+    Returns dataframe that has a matching format of the other API functions
+    """
+
+    jobsearcher_titles = [item.replace(" ", "&q[must][1]=")for item in main_titles]
+    jobsearcher_titles = ["q[must][0]=" + item for item in jobsearcher_titles]
+
+    for title in jobsearcher_titles:
+
+        # make the requests to Adzuna API
+        request = requests.get(f'https://api.jobsearcher.com/v1/jobs?q{jobsearcher_titles}&status=active&limit=100&type=organic&offset=0&distance=25&collapse=companyNameAndState&from_age=1&sortBy[0]=postedDate&sortOrder[0]=desc')
+
+    # convert result into json
+        result = request.json()
+        # flatten nested objects
+        flattened_results =[
+            flatten(job, reducer="underscore") for job in result['data']]
+
+        # append those flattened results to make a list of flattened results
+        # with each index being a different API
+        appended_results.append(flattened_results)
+
+        # turn 2D list with different API calls into a 1D list to be put into df
+        final = [job for api in appended_results for job in api]
+
+        # turn into dataframe
+    df = pd.DataFrame.from_dict(flattened_results)
+
+        # rename columns
+    df = df[['id', 'url', 'title', 'title', '{Need tags}', 'bullets', 'company', 'postedDate', 'location_latitude', 'location_longitude', 'location_city', 'location_state']]
+
+    df.columns = [
+        "id",
+        "post_url",
+        "title",
+        "title_keyword",
+        "tags",
+        "description",
+        "company",
+        "publication_date",
+        "latitude",
+        "longitude",
+        "city",
+        "state"
+    ]
+
+
+    # 'title_keyword' and 'tags' are in Adzuna but NOT in Jobsearcher
+    # Changed 'location' to two seperate columns 'city', 'state'
+    return df
 # def merge_dfs():
 #     """
 #     Merges all of the dfs!
