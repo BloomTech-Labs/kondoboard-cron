@@ -1,7 +1,8 @@
-#TODO : change from adzuna to merge function
+# TODO : change from adzuna to merge function
 from etl.extract import adzuna
 from etl.transform import transform_df
 from etl.load import load_query
+
 
 def main():
     df = adzuna()
