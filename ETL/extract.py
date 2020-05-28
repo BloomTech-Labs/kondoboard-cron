@@ -90,6 +90,12 @@ def adzuna():
         "longitude",
     ]
 
+    # Append "A" to ID so that we know what API it's coming from (this prevents duplicates
+    # and makes it so that the IDs from different APIs don't overlap)
+    df['id'] = df['id'].apply(
+        lambda x: "A" + str(x)
+    )
+
     # separate city and state
     # make sure that there is more than one value for location (some are only country)
     df["city"] = df["location"].apply(
@@ -99,10 +105,9 @@ def adzuna():
         lambda x: x[1] if len(x) > 1 else "uknown"
     )
 
-    print(df)
-
     return df
 
+adzuna()
 
 # def merge_dfs():
 #     """
