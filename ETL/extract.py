@@ -28,7 +28,6 @@ def adzuna():
         "description",
         "company",
         "publication_date",
-        "location",
         "latitude",
         "longitude",
         "city",
@@ -104,6 +103,10 @@ def adzuna():
     df["state"] = df["location"].apply(
         lambda x: x[1] if len(x) > 1 else "uknown"
     )
+
+    df = df.drop(['location'], axis=1)
+    print(df.head(20))
+    print(df.columns)
 
     return df
 
