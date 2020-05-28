@@ -20,14 +20,18 @@ We created C4 diagrams to communicate the software architecture
 ### Container
 ![Container](./diagrams/kondo_container.svg)
 
-## Install
-``
+## Install  
+```
+```
+## Usage  
+```
+```  
+## Testing  
+```
+```  
+## API
 
-## Usage
-``
-
-## Testing
-``
-
+[FastAPI - Swagger documentation](http://kondoboard-ds-environment.eba-u7c3zdzn.us-east-1.elasticbeanstalk.com/docs)  
+ 
 ## License
 ![License](./LICENSE/)
