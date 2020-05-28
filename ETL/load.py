@@ -1,18 +1,15 @@
 import json
 import requests
-
-from dotenv import load_dotenv
 import os
 
-load_dotenv()
+app_id = os.environ["APP_ID"]
+api_key = os.environ["API_KEY"]
 
-app_id = os.getenv("APP_ID")
-api_key = os.getenv("API_KEY")
+es_user = os.environ["ES_USER"]
+es_password = os.environ["ES_PASSWORD"]
+es_endpoint = os.environ["ES_ENDPOINT"]
 
-es_user = os.getenv("ES_USER")
-es_password = os.getenv("ES_PASSWORD")
-
-es_host = f"https://{es_user}:{es_password}@b6ea0151e3bd4dcea32dc74a1093ba45.us-east-1.aws.found.io:9243/jobs/_bulk"
+uri = f"https://{es_user}:{es_password}@{es_endpoint}/jobs/_bulk"
 
 
 def load_query(df):
@@ -42,10 +39,9 @@ def load_query(df):
 
     with open("./bulk_query.json", "r") as f:
         data = f.read()
-        print(data)
 
     try:
-        requests.post(es_host, headers=headers, data=data)
-        print("Woooooooot!")
+        r = requests.post(uri, headers=headers, data=data)
+        print(r)
     except Exception:
         raise

@@ -105,8 +105,6 @@ def adzuna():
     )
 
     df = df.drop(['location'], axis=1)
-    print(df.head(20))
-    print(df.columns)
 
     return df
 
