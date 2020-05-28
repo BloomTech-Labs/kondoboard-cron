@@ -18,6 +18,22 @@ def adzuna():
     """
     Function to make HTTP requests to Adzuna API
     Returns dataframe that is the same format as others
+    Current format:
+        df.columns = [
+        "id",
+        "post_url",
+        "title",
+        "title_keyword",
+        "tags",
+        "description",
+        "company",
+        "publication_date",
+        "location",
+        "latitude",
+        "longitude",
+        "city",
+        "state
+    ]
     """
     adzuna_titles = [item.strip().replace(" ", "%20") for item in main_titles]
     appended_results = list()
@@ -79,7 +95,9 @@ def adzuna():
     df["city"] = df["location"].apply(
         lambda x: x[-1].replace(" County", "") if len(x) > 1 else "unknown"
     )
-    df["state"] = df["location"].apply(lambda x: x[1] if len(x) > 1 else "uknown")
+    df["state"] = df["location"].apply(
+        lambda x: x[1] if len(x) > 1 else "uknown"
+    )
 
     print(df)
 
