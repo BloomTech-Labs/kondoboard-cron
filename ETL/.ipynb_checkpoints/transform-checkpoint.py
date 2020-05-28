@@ -65,10 +65,6 @@ def transform_df(df):
     # transforms date columns
     df['publication_date'] = df['publication_date'].apply(format_date)
 
-    # transform keyword columns
-    df['company'] = df['company'].apply(keyword)
-    df['title_keyword'] = df['title_keyword'].apply(keyword)
-
     return df
 
     

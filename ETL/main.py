@@ -1,9 +1,10 @@
-from etl.extract import request_to_df
+#TODO : change from adzuna to merge function
+from etl.extract import adzuna
 from etl.transform import transform_df
 from etl.load import load_query
 
 def main():
-    df = request_to_df()
+    df = adzuna()
     df = transform_df(df)
     df = load_query(df)
 
