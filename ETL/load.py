@@ -30,7 +30,6 @@ def load_query(df):
                 "company": row["company"],
                 "description": row["description"],
                 "publication_date": row["publication_date"],
-                "location_raw": row["location"],
                 "location_city": row["city"],
                 "location_state": row["state"],
                 "location_point": f"{row['latitude']},{row['longitude']}",
