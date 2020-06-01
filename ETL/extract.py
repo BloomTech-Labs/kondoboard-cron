@@ -11,7 +11,22 @@ app_id = os.getenv("APP_ID")
 api_key = os.getenv("API_KEY")
 
 # This is where we can define the titles that we want to search for
-main_titles = ["data engineer", "data scientist"]
+main_titles = [
+    "data engineer",
+    "data scientist",
+    "python",
+    "machine learning",
+    "sql",
+    "pandas",
+    "front end",
+    "back end",
+    "full stack",
+    "react",
+    "angular",
+    "vue",
+    "software engineer",
+    "software developer",
+]
 
 
 def adzuna():
@@ -57,10 +72,10 @@ def adzuna():
         # turn 2D list with different API calls into a 1D list to be put into df
         final = [job for api in appended_results for job in api]
 
-    df_a = pd.DataFrame.from_dict(final)
+    df = pd.DataFrame.from_dict(final)
 
     # rename columns
-    df_a = df_a[
+    df = df[
         [
             "id",
             "redirect_url",
@@ -75,7 +90,7 @@ def adzuna():
             "longitude",
         ]
     ]
-    df_a.columns = [
+    df.columns = [
         "id",
         "post_url",
         "title",
@@ -91,20 +106,18 @@ def adzuna():
 
     # Append "A" to ID so that we know what API it's coming from (this prevents duplicates
     # and makes it so that the IDs from different APIs don't overlap)
-    df_a["id"] = df_a["id"].apply(lambda x: "A" + str(x))
+    df["id"] = df["id"].apply(lambda x: "A" + str(x))
 
     # separate city and state
     # make sure that there is more than one value for location (some are only country)
-    df_a["city"] = df_a["location"].apply(
+    df["city"] = df["location"].apply(
         lambda x: x[-1].replace(" County", "") if len(x) > 1 else "unknown"
     )
-    df_a["state"] = df_a["location"].apply(lambda x: x[1] if len(x) > 1 else "uknown")
+    df["state"] = df["location"].apply(lambda x: x[1] if len(x) > 1 else "uknown")
 
-    df_a = df_a.drop(["location"], axis=1)
+    df = df.drop(["location"], axis=1)
 
-    return df_a
-
-adzuna()
+    return df
 
 
 def jobsearcher():
@@ -142,34 +155,34 @@ def jobsearcher():
 
         # convert result into json
         result = request.json()
-        while len(result['data']) > 0:
+        while len(result["data"]) > 0:
             offset += 100
             request = requests.get(
-            f"https://api.jobsearcher.com/v1/jobs?q[must][0]=data&q[must][1]=scientist&status=active&limit=100&type=organic&offset={offset}&distance=25&collapse=companyNameAndState&from_age=1&sortBy[0]=postedDate&sortOrder[0]=desc"
+                f"https://api.jobsearcher.com/v1/jobs?q[must][0]=data&q[must][1]=scientist&status=active&limit=100&type=organic&offset={offset}&distance=25&collapse=companyNameAndState&from_age=1&sortBy[0]=postedDate&sortOrder[0]=desc"
             )
             result = request.json()
-            
-        # flatten nested objects
+
+            # flatten nested objects
             flattened_results = [
                 flatten(job, reducer="underscore") for job in result["data"]
             ]
-        
-        #creates a list of tags from the list of dictionaries in 'keywords'
+
+            # creates a list of tags from the list of dictionaries in 'keywords'
             for item in flattened_results:
-                item.update(tags = [n['value'] for n in item['keywords']])
-            
-        # append those flattened results to make a list of flattened results
-        # with each index being a different API
+                item.update(tags=[n["value"] for n in item["keywords"]])
+
+            # append those flattened results to make a list of flattened results
+            # with each index being a different API
             appended_results.append(flattened_results)
 
-        # turn 2D list with different API calls into a 1D list to be put into df
+            # turn 2D list with different API calls into a 1D list to be put into df
             final = [job for api in appended_results for job in api]
 
         # turn into dataframe
-    df_js = pd.DataFrame.from_dict(final)
+    df = pd.DataFrame.from_dict(final)
 
     # rename columns
-    df_js = df_js[
+    df = df[
         [
             "id",
             "url",
@@ -186,7 +199,7 @@ def jobsearcher():
         ]
     ]
 
-    df_js.columns = [
+    df.columns = [
         "id",
         "post_url",
         "title",
@@ -201,20 +214,13 @@ def jobsearcher():
         "state",
     ]
 
-    df_js['id'] = df_js['id'].apply(
-        lambda x: "JS" + str(x)
-    )
-    
-    return df_js
+    df["id"] = df["id"].apply(lambda x: "JS" + str(x))
+
+    return df
 
 
-def all_apis():
-#     """
-#     Merges all of the dfs!
-#     """
+def merge_all_apis():
+    #     """
+    #     Merges all of the dfs!
+    #     """
     return pd.concat([adzuna(), jobsearcher()])
-
-all_apis()
-
-#     adzuna_df = adzuna()
-#     # merge
