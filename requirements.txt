@@ -3,3 +3,9 @@ arrow
 beautifulsoup4
 requests
 flatten-dict
+
+# test requirements
+pytest
+snapshottest
+pytest-sugar
+pytest-cov

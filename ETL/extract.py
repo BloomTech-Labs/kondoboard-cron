@@ -108,8 +108,6 @@ def adzuna():
 
     return df
 
-adzuna()
-
 # def merge_dfs():
 #     """
 #     Merges all of the dfs!
