@@ -14,6 +14,7 @@ api_key = os.getenv("API_KEY")
 main_titles = [
     "data engineer",
     "data scientist",
+    "data analytics"
     "python",
     "machine learning",
     "sql",
