@@ -1,6 +1,7 @@
 import requests
 import pandas as pd
 from flatten_dict import flatten
+from urllib.parse import quote
 
 from dotenv import load_dotenv
 import os
@@ -12,7 +13,7 @@ api_key = os.getenv("API_KEY")
 
 # This is where we can define the titles that we want to search for
 main_titles = [
-    "data engineer",
+    "data engineer"]
     "data scientist",
     "data analytics"
     "python",
@@ -28,7 +29,6 @@ main_titles = [
     "software engineer",
     "software developer",
 ]
-
 
 def adzuna():
     """
@@ -50,15 +50,26 @@ def adzuna():
         "state
     ]
     """
-    adzuna_titles = [item.strip().replace(" ", "%20") for item in main_titles]
+
+    adzuna_titles = [item.strip() for item in main_titles]
     appended_results = list()
 
     for title in adzuna_titles:
 
         # make the requests to Adzuna API
         request = requests.get(
-            f"https://api.adzuna.com/v1/api/jobs/us/search/1?app_id={app_id}&app_key={api_key}&results_per_page=50&what={title}&content-type=application/json"
+            "https://api.adzuna.com/v1/api/jobs/us/search/1",
+            params={
+                "app_id": app_id,
+                "app_key": api_key,
+                "results_per_page": "50",
+                "what": title,
+            },
+            headers={
+                "content-type": "application/json",
+            },
         )
+
         result = request.json()
 
         # flatten nested objects returned by API by looping over each job
@@ -119,7 +130,6 @@ def adzuna():
     df = df.drop(["location"], axis=1)
 
     return df
-
 
 def jobsearcher():
     """
