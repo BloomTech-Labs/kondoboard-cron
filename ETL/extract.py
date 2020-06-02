@@ -3,19 +3,17 @@ import pandas as pd
 from flatten_dict import flatten
 from urllib.parse import quote
 
-from dotenv import load_dotenv
 import os
 
-load_dotenv()
-
-app_id = os.getenv("APP_ID")
-api_key = os.getenv("API_KEY")
+app_id = os.environ["APP_ID"]
+api_key = os.environ["API_KEY"]
 
 # This is where we can define the titles that we want to search for
 main_titles = [
     "data engineer",
     "data scientist",
-    "data analytics" "python",
+    "data analytics",
+    "python",
     "machine learning",
     "sql",
     "pandas",
@@ -51,12 +49,10 @@ def adzuna():
     ]
     """
 
-    adzuna_titles = [quote(item.strip()) for item in main_titles]
     appended_results = list()
 
-    for title in adzuna_titles:
+    for title in main_titles:
 
-        # make the requests to Adzuna API
         request = requests.get(
             "https://api.adzuna.com/v1/api/jobs/us/search/1",
             params={
@@ -65,7 +61,7 @@ def adzuna():
                 "results_per_page": "50",
                 "what": title,
             },
-            headers={"content-type": "application/json",},
+            headers={"content-type": "application/json"}
         )
 
         result = request.json()

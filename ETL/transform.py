@@ -10,8 +10,7 @@ def keyword(text):
     -replacing '-' with '_'
     """
     text = text.lower()
-    text = text.replace(" ", "_")
-    text = text.replace("-", "_")
+    text = text.replace("-", " ")
     return text
 
 
@@ -31,15 +30,11 @@ def format_date(text):
     return time
 
 
-# TODO:
-# Change it so that we have a list of the columns that need
-# the specific functions applied to them so that we can just add them
-# to each one
+cols_to_remove_html = ['title', 'title_keyword', 'description']
+date_cols = ['publication_date']
+keyword_cols = ['company', 'title_keyword']
 
-# ex:
-# col_to_remove_html = ['title', 'title_keyword', 'description']
-# for col in col_to_remove_html:
-#     df[col] = df[col].apply(remove_html)
+
 def transform_df(df):
     """
     Takes in dataframe, applies functions to correct columns
@@ -47,16 +42,17 @@ def transform_df(df):
     # insert date column
     df["inserted_date"] = arrow.utcnow().format("YYYY-MM-DD")
 
-    # remove HTML from columns
-    df["title"] = df["title"].apply(remove_html)
-    df["title_keyword"] = df["title_keyword"].apply(remove_html)
-    df["description"] = df["description"].apply(remove_html)
+    # remove html from columns
+    for col in cols_to_remove_html:
+        df[col] = df[col].apply(remove_html)
 
+    print(df['description'].head())
     # transforms date columns
-    df["publication_date"] = df["publication_date"].apply(format_date)
+    for col in date_cols:
+        df[col] = df[col].apply(format_date)
 
     # transform keyword columns
-    df["company"] = df["company"].apply(keyword)
-    df["title_keyword"] = df["title_keyword"].apply(keyword)
+    for col in keyword_cols:
+        df[col] = df[col].apply(keyword)
 
     return df
