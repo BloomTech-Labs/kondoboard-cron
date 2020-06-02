@@ -1,5 +1,6 @@
 from etl.transform import keyword, remove_html, format_date
 
+
 def test_keyword():
     """Tests keyword logic
     """
@@ -32,6 +33,6 @@ def test_remove_html(snapshot):
 def test_date():
     """Test date parsing in arrow
     """
-    test_date= "2020-10-07"
+    test_date = "2020-10-07"
     actual = format_date(test_date)
     assert actual == test_date

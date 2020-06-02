@@ -13,10 +13,9 @@ api_key = os.getenv("API_KEY")
 
 # This is where we can define the titles that we want to search for
 main_titles = [
-    "data engineer"]
+    "data engineer",
     "data scientist",
-    "data analytics"
-    "python",
+    "data analytics" "python",
     "machine learning",
     "sql",
     "pandas",
@@ -29,6 +28,7 @@ main_titles = [
     "software engineer",
     "software developer",
 ]
+
 
 def adzuna():
     """
@@ -51,7 +51,7 @@ def adzuna():
     ]
     """
 
-    adzuna_titles = [item.strip() for item in main_titles]
+    adzuna_titles = [quote(item.strip()) for item in main_titles]
     appended_results = list()
 
     for title in adzuna_titles:
@@ -65,9 +65,7 @@ def adzuna():
                 "results_per_page": "50",
                 "what": title,
             },
-            headers={
-                "content-type": "application/json",
-            },
+            headers={"content-type": "application/json",},
         )
 
         result = request.json()
@@ -130,6 +128,7 @@ def adzuna():
     df = df.drop(["location"], axis=1)
 
     return df
+
 
 def jobsearcher():
     """
@@ -228,6 +227,7 @@ def jobsearcher():
     df["id"] = df["id"].apply(lambda x: "JS" + str(x))
 
     return df
+
 
 def merge_all_apis():
     #     """

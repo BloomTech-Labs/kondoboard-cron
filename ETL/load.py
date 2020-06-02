@@ -32,10 +32,9 @@ def load_query(df):
                 "location_point": f"{row['latitude']},{row['longitude']}",
             }
         )
-    
+
     # DO THIS INSTEAD
     # data = "\n".join(query)
-
 
     with open("bulk_query.json", "w") as f:
         for item in query:

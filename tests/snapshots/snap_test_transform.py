@@ -7,7 +7,9 @@ from snapshottest import Snapshot
 
 snapshots = Snapshot()
 
-snapshots['test_remove_html 1'] = '''
+snapshots[
+    "test_remove_html 1"
+] = """
 
 
 
@@ -19,4 +21,4 @@ This is a very simple HTML document
 It only has two paragraphs
 
 
-'''
+"""
