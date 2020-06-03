@@ -1,4 +1,3 @@
-
 from etl.extract import merge_all_apis
 from etl.transform import transform_df
 from etl.load import load_query

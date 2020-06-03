@@ -33,6 +33,13 @@ def load_query(df):
             }
         )
 
+    print(query)
+
+    # DO THIS INSTEAD
+    # Not working because it isn't a string....
+    # Will come back to this later
+    # data = "\n".join(query)
+
     with open("bulk_query.json", "w") as f:
         for item in query:
             f.write(f"{json.dumps(item)}\n")
