@@ -1,7 +1,6 @@
 import requests
 import pandas as pd
 from flatten_dict import flatten
-from urllib.parse import quote
 
 import os
 
@@ -61,7 +60,7 @@ def adzuna():
                 "results_per_page": "50",
                 "what": title,
             },
-            headers={"content-type": "application/json"}
+            headers={"content-type": "application/json"},
         )
 
         result = request.json()
@@ -147,27 +146,36 @@ def jobsearcher():
     ]
     """
 
-    jobsearcher_titles = [item.replace(" ", "&q[must][1]=") for item in main_titles]
-    jobsearcher_titles = ["q[must][0]=" + item for item in jobsearcher_titles]
+    jobsearcher_titles = [
+        "q[must][0]=" + item.replace(" ", "&q[must][1]=") for item in main_titles
+    ]
     appended_results = list()
 
     for title in jobsearcher_titles:
+        """The API only returns 100 listings max.
+        This loops through, increasing by 100 each time until all listings are retrived for 
+        each individual job title search.
+        """
 
-        # make the requests to JobSearcher API
+        x = 1
         offset = 0
-        request = requests.get(
-            f"https://api.jobsearcher.com/v1/jobs?{title}&status=active&limit=100&type=organic&offset={offset}&distance=25&collapse=companyNameAndState&from_age=1&sortBy[0]=postedDate&sortOrder[0]=desc"
-        )
-
-        # convert result into json
-        result = request.json()
-        while len(result["data"]) > 0:
-            offset += 100
+        while x > 0:
             request = requests.get(
-                f"https://api.jobsearcher.com/v1/jobs?q[must][0]=data&q[must][1]=scientist&status=active&limit=100&type=organic&offset={offset}&distance=25&collapse=companyNameAndState&from_age=1&sortBy[0]=postedDate&sortOrder[0]=desc"
+                f"https://api.jobsearcher.com/v1/jobs?{title}",
+                params={
+                    "limit": 100,
+                    "offset": {offset},
+                    "from_age": 1,
+                    "status": "active",
+                    "sortBy": "postedDate",
+                    "sortOrder": "desc",
+                },
             )
+
+            offset += 100
             result = request.json()
 
+            x = len(result["data"])
             # flatten nested objects
             flattened_results = [
                 flatten(job, reducer="underscore") for job in result["data"]
@@ -181,7 +189,6 @@ def jobsearcher():
             # with each index being a different API
             appended_results.append(flattened_results)
 
-            # turn 2D list with different API calls into a 1D list to be put into df
             final = [job for api in appended_results for job in api]
 
         # turn into dataframe
@@ -219,6 +226,8 @@ def jobsearcher():
         "city",
         "state",
     ]
+    # removes duplicates from overlapping job title searches
+    df.drop_duplicates(subset="id", keep="first", inplace=True)
 
     df["id"] = df["id"].apply(lambda x: "JS" + str(x))
 
