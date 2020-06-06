@@ -60,7 +60,7 @@ def adzuna():
                 "results_per_page": "50",
                 "what": title,
             },
-            headers={"content-type": "application/json"},
+            headers={"content-type": "application/json"}
         )
 
         result = request.json()
