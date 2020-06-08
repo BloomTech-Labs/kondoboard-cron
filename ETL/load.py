@@ -33,8 +33,6 @@ def load_query(df):
             }
         )
 
-    print(query)
-
     # DO THIS INSTEAD
     # Not working because it isn't a string....
     # Will come back to this later
@@ -48,7 +46,8 @@ def load_query(df):
         data = f.read()
 
     try:
-        r = requests.post(uri, headers=headers, data=data)
-        print(r)
+        print("yes")
+        #r = requests.post(uri, headers=headers, data=data)
+        #print(r)
     except Exception:
         raise

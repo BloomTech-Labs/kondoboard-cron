@@ -10,20 +10,20 @@ api_key = os.environ["API_KEY"]
 # This is where we can define the titles that we want to search for
 main_titles = [
     "data engineer",
-    "data scientist",
-    "data analytics",
-    "python",
-    "machine learning",
-    "sql",
-    "pandas",
-    "front end",
-    "back end",
-    "full stack",
-    "react",
-    "angular",
-    "vue",
-    "software engineer",
-    "software developer",
+    "data scientist"
+    # "data analytics",
+    # "python",
+    # "machine learning",
+    # "sql",
+    # "pandas",
+    # "front end",
+    # "back end",
+    # "full stack",
+    # "react",
+    # "angular",
+    # "vue",
+    # "software engineer",
+    # "software developer",
 ]
 
 
@@ -44,7 +44,7 @@ def adzuna():
         "latitude",
         "longitude",
         "city",
-        "state
+        "state,
     ]
     """
 
@@ -112,6 +112,7 @@ def adzuna():
     # Append "A" to ID so that we know what API it's coming from (this prevents duplicates
     # and makes it so that the IDs from different APIs don't overlap)
     df["id"] = df["id"].apply(lambda x: "A" + str(x))
+    df["description"] = df["description"].apply(lambda x: [x])
 
     # separate city and state
     # make sure that there is more than one value for location (some are only country)
@@ -142,7 +143,7 @@ def jobsearcher():
         "latitude",
         "longitude",
         "city",
-        "state
+        "state,
     ]
     """
 
