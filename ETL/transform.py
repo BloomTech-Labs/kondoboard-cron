@@ -9,7 +9,7 @@ def keyword(text):
     -replacing ' ' with '_'
     -replacing '-' with '_'
     """
-    text = text.lower()
+    text = str(text).lower()
     text = text.replace("-", " ")
     return text
 
@@ -18,7 +18,7 @@ def remove_html(text):
     """
     Removes HTML
     """
-    return BeautifulSoup(text).get_text()
+    return BeautifulSoup(text, 'html.parser').get_text()
 
 
 def format_date(text):
