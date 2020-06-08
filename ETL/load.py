@@ -1,25 +1,44 @@
 import json
 import requests
 import os
+from requests_aws4auth import AWS4Auth
+from elasticsearch import Elasticsearch, RequestsHttpConnection
+from elasticsearch.helpers import bulk
+import boto3
 
 app_id = os.environ["APP_ID"]
 api_key = os.environ["API_KEY"]
 
-es_user = os.environ["ES_USER"]
-es_password = os.environ["ES_PASSWORD"]
-es_endpoint = os.environ["ES_ENDPOINT"]
+host = os.environ["AWS_ENDPOINT"]
+region = os.environ["REGION"]
 
-uri = f"https://{es_user}:{es_password}@{es_endpoint}/jobs/_bulk"
+service = "es"
+credentials = boto3.Session().get_credentials()
+awsauth = AWS4Auth(
+    credentials.access_key,
+    credentials.secret_key,
+    region,
+    service,
+    session_token=credentials.token,
+)
+
+es = Elasticsearch(
+    send_get_body_as="POST",
+    hosts=[host],
+    http_auth=awsauth,
+    use_ssl=True,
+    verify_certs=True,
+    connection_class=RequestsHttpConnection,
+)
 
 
-def load_query(df):
-    headers = {"Content-Type": "application/json"}
-    query = list()
-
+def gendata(df):
     for index, row in df.iterrows():
-        query.append({"index": {"_id": row["id"]}})
-        query.append(
-            {
+        yield {
+            "_op_type": "index",
+            "_index": "jobs",
+            "_id": row["id"],
+            "doc": {
                 "post_url": row["post_url"],
                 "title": row["title"],
                 "title_keyword": row["title_keyword"],
@@ -30,25 +49,9 @@ def load_query(df):
                 "location_city": row["city"],
                 "location_state": row["state"],
                 "location_point": f"{row['latitude']},{row['longitude']}",
-            }
-        )
+            },
+        }
 
-    print(query)
 
-    # DO THIS INSTEAD
-    # Not working because it isn't a string....
-    # Will come back to this later
-    # data = "\n".join(query)
-
-    with open("bulk_query.json", "w") as f:
-        for item in query:
-            f.write(f"{json.dumps(item)}\n")
-
-    with open("./bulk_query.json", "r") as f:
-        data = f.read()
-
-    try:
-        r = requests.post(uri, headers=headers, data=data)
-        print(r)
-    except Exception:
-        raise
+def query(df):
+    print(bulk(es, gendata(df)))

@@ -9,7 +9,7 @@ def keyword(text):
     -replacing ' ' with '_'
     -replacing '-' with '_'
     """
-    text = text.lower()
+    text = str(text).lower()
     text = text.replace("-", " ")
     return text
 
@@ -18,7 +18,10 @@ def remove_html(text):
     """
     Removes HTML
     """
-    return BeautifulSoup(text).get_text()
+    if type(text) == str:
+        return BeautifulSoup(text, "html.parser").get_text()
+    else:
+        return [BeautifulSoup(x, "html.parser").get_text() for x in text]
 
 
 def format_date(text):
@@ -30,9 +33,9 @@ def format_date(text):
     return time
 
 
-cols_to_remove_html = ['title', 'title_keyword', 'description']
-date_cols = ['publication_date']
-keyword_cols = ['company', 'title_keyword']
+cols_to_remove_html = ["title", "title_keyword", "description"]
+date_cols = ["publication_date"]
+keyword_cols = ["company", "title_keyword"]
 
 
 def transform_df(df):
@@ -46,7 +49,6 @@ def transform_df(df):
     for col in cols_to_remove_html:
         df[col] = df[col].apply(remove_html)
 
-    print(df['description'].head())
     # transforms date columns
     for col in date_cols:
         df[col] = df[col].apply(format_date)

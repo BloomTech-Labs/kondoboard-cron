@@ -44,7 +44,7 @@ def adzuna():
         "latitude",
         "longitude",
         "city",
-        "state
+        "state,
     ]
     """
 
@@ -60,7 +60,7 @@ def adzuna():
                 "results_per_page": "50",
                 "what": title,
             },
-            headers={"content-type": "application/json"}
+            headers={"content-type": "application/json"},
         )
 
         result = request.json()
@@ -112,6 +112,7 @@ def adzuna():
     # Append "A" to ID so that we know what API it's coming from (this prevents duplicates
     # and makes it so that the IDs from different APIs don't overlap)
     df["id"] = df["id"].apply(lambda x: "A" + str(x))
+    df["description"] = df["description"].apply(lambda x: [x])
 
     # separate city and state
     # make sure that there is more than one value for location (some are only country)
@@ -142,7 +143,7 @@ def jobsearcher():
         "latitude",
         "longitude",
         "city",
-        "state
+        "state,
     ]
     """
 
