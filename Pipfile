@@ -9,6 +9,7 @@ verify_ssl = true
 pandas = "*"
 arrow = "*"
 beautifulsoup4 = "*"
+elasticsearch = {extras = ["async"],version = "*"}
 requests = "*"
 flatten-dict = "*"
 pytest = "*"

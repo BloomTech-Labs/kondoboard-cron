@@ -10,20 +10,20 @@ api_key = os.environ["API_KEY"]
 # This is where we can define the titles that we want to search for
 main_titles = [
     "data engineer",
-    "data scientist"
-    # "data analytics",
-    # "python",
-    # "machine learning",
-    # "sql",
-    # "pandas",
-    # "front end",
-    # "back end",
-    # "full stack",
-    # "react",
-    # "angular",
-    # "vue",
-    # "software engineer",
-    # "software developer",
+    "data scientist",
+    "data analytics",
+    "python",
+    "machine learning",
+    "sql",
+    "pandas",
+    "front end",
+    "back end",
+    "full stack",
+    "react",
+    "angular",
+    "vue",
+    "software engineer",
+    "software developer",
 ]
 
 
@@ -60,7 +60,7 @@ def adzuna():
                 "results_per_page": "50",
                 "what": title,
             },
-            headers={"content-type": "application/json"}
+            headers={"content-type": "application/json"},
         )
 
         result = request.json()
