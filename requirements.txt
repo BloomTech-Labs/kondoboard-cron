@@ -1,8 +1,10 @@
 pandas
 arrow
 beautifulsoup4
-elasticsearch[async]
+boto3
+elasticsearch
 requests
+requests-aws4auth
 flatten-dict
 
 # test requirements

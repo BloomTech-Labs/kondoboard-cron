@@ -57,4 +57,7 @@ def transform_df(df):
     for col in keyword_cols:
         df[col] = df[col].apply(keyword)
 
+    for col in ["latitude", "longitude"]:
+        df[col] = df[col].fillna(0)
+
     return df
