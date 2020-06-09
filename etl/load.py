@@ -38,20 +38,19 @@ def gendata(df):
             "_op_type": "index",
             "_index": "jobs",
             "_id": row["id"],
-            "doc": {
-                "post_url": row["post_url"],
-                "title": row["title"],
-                "title_keyword": row["title_keyword"],
-                "tags": row["tags"],
-                "company": row["company"],
-                "description": row["description"],
-                "publication_date": row["publication_date"],
-                "location_city": row["city"],
-                "location_state": row["state"],
-                "location_point": f"{row['latitude']},{row['longitude']}",
-            },
+            "post_url": row["post_url"],
+            "title": row["title"],
+            "title_keyword": row["title_keyword"],
+            "tags": row["tags"],
+            "company": row["company"],
+            "description": row["description"],
+            "publication_date": row["publication_date"],
+            "location_city": row["city"],
+            "location_state": row["state"],
+            "location_point": f"{row['latitude']},{row['longitude']}",
         }
 
 
 def query(df):
+
     print(bulk(es, gendata(df)))
