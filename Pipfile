@@ -9,13 +9,18 @@ verify_ssl = true
 pandas = "*"
 arrow = "*"
 beautifulsoup4 = "*"
-elasticsearch = {extras = ["async"],version = "*"}
+boto3 = "*"
+elasticsearch = "*"
 requests = "*"
+requests-aws4auth = "*"
 flatten-dict = "*"
 pytest = "*"
 snapshottest = "*"
 pytest-sugar = "*"
 pytest-cov = "*"
+fastapi = "*"
+uvicorn = "*"
+gunicorn = "*"
 
 [requires]
-python_version = "3.8"
+python_version = "3.7"

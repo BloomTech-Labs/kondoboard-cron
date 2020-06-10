@@ -6,6 +6,10 @@ elasticsearch
 requests
 requests-aws4auth
 flatten-dict
+fastapi
+uvicorn
+gunicorn
+
 
 # test requirements
 pytest
