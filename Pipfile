@@ -10,7 +10,7 @@ pandas = "*"
 arrow = "*"
 beautifulsoup4 = "*"
 boto3 = "*"
-elasticsearch = {extras = ["async"],version = "*"}
+elasticsearch = "*"
 requests = "*"
 requests-aws4auth = "*"
 flatten-dict = "*"

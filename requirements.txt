@@ -2,7 +2,7 @@ pandas
 arrow
 beautifulsoup4
 boto3
-elasticsearch[async]
+elasticsearch
 requests
 requests-aws4auth
 flatten-dict
