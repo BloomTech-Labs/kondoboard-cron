@@ -1,6 +1,6 @@
-from etl.extract import merge_all_apis
-from etl.transform import transform_df
-from etl.load import query
+from extract import merge_all_apis
+from transform import transform_df
+from load import query
 
 
 def main():
