@@ -45,6 +45,7 @@ def gendata(df):
             "company": row["company"],
             "description": row["description"],
             "publication_date": row["publication_date"],
+            "inserted_date": row["inserted_date"],
             "location_city": row["city"],
             "location_state": row["state"],
             "location_point": f"{row['latitude']},{row['longitude']}",
@@ -53,4 +54,5 @@ def gendata(df):
 
 def query(df):
 
-    print(bulk(es, gendata(df)))
+    print(df)
+    #print(bulk(es, gendata(df)))
