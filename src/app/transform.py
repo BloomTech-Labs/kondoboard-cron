@@ -20,6 +20,8 @@ def remove_html(text):
     """
     if type(text) == str:
         return BeautifulSoup(text, "html.parser").get_text()
+    if type(text) == float:
+        return BeautifulSoup(str(text), "html.parser").get_text()
     else:
         return [BeautifulSoup(x, "html.parser").get_text() for x in text]
 
@@ -47,7 +49,6 @@ def transform_df(df):
 
     # remove html from columns
     for col in cols_to_remove_html:
-        df[col] = df[col].apply(lambda x: str(x))
         df[col] = df[col].apply(remove_html)
 
     # transforms date columns
