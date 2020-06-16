@@ -47,6 +47,7 @@ def transform_df(df):
 
     # remove html from columns
     for col in cols_to_remove_html:
+        df[col] = df[col].apply(lambda x: str(x))
         df[col] = df[col].apply(remove_html)
 
     # transforms date columns
