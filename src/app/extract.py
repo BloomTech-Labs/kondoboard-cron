@@ -293,6 +293,7 @@ def monster_scraper():
                 x = {"id": row[0],
                     "publication_date": row[1],
                     "title": row[2],
+                    "title_keyword": row[2],
                     "city": row[3],
                     "state": row[4],
                     "post_url": row[5],
