@@ -1,8 +1,9 @@
 import logging
+logger = logging.getLogger(__name__)
+
 import requests
 import pandas as pd
 from flatten_dict import flatten
-
 import os
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(name)s:%(message)s")
@@ -188,9 +189,12 @@ def jobsearcher():
             offset += 100
             result = request.json()
             
-            logging.info(f"{result}")
+            total_results = result["total"]
+            logging.info(f"{total_results}")
             
             x = len(result["data"])
+            logging.info(f"Len of result[data] {x}")
+
             # flatten nested objects
             flattened_results = [
                 flatten(job, reducer="underscore") for job in result["data"]
