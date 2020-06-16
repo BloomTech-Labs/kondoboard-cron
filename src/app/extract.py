@@ -183,6 +183,8 @@ def jobsearcher():
                 },
             )
 
+            logging.info(f"Request code: {request}")
+
             offset += 100
             result = request.json()
             
