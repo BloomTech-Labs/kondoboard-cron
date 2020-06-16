@@ -4,8 +4,8 @@ from flatten_dict import flatten
 
 import os
 
-app_id = os.environ["APP_ID"]
-api_key = os.environ["API_KEY"]
+# app_id = os.environ["APP_ID"]
+# api_key = os.environ["API_KEY"]
 
 # This is where we can define the titles that we want to search for
 main_titles = [
@@ -55,8 +55,8 @@ def adzuna():
         request = requests.get(
             "https://api.adzuna.com/v1/api/jobs/us/search/1",
             params={
-                "app_id": app_id,
-                "app_key": api_key,
+                "app_id": "e01f11150c93613b88693ef53adb8109",
+                "app_key": "da871bdc",
                 "results_per_page": "50",
                 "what": title,
             },
