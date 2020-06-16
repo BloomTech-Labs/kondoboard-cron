@@ -114,3 +114,7 @@ venv.bak/
 dmypy.json
 # Pyre type checker
 .pyre/
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml

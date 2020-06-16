@@ -1,8 +1,11 @@
+import logging
 import requests
 import pandas as pd
 from flatten_dict import flatten
 
 import os
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(name)s:%(message)s")
 
 app_id = os.environ["APP_ID"]
 api_key = os.environ["API_KEY"]
@@ -51,7 +54,10 @@ def adzuna():
     appended_results = list()
 
     for title in main_titles:
-
+        
+        logging.info("="*20)
+        logging.info(f"Adzuna request for {title}:")
+        
         request = requests.get(
             "https://api.adzuna.com/v1/api/jobs/us/search/1",
             params={
@@ -64,6 +70,8 @@ def adzuna():
         )
 
         result = request.json()
+
+        logging.info(f" Number of jobs pulled :{len(result['results'])}")
 
         # flatten nested objects returned by API by looping over each job
         flattened_results = [
@@ -158,6 +166,8 @@ def jobsearcher():
         each individual job title search.
         """
 
+        logging.info(f"JobSearcher request for {title}:")
+
         x = 1
         offset = 0
         while x > 0:
@@ -175,7 +185,9 @@ def jobsearcher():
 
             offset += 100
             result = request.json()
-
+            
+            logging.info(f"{result}")
+            
             x = len(result["data"])
             # flatten nested objects
             flattened_results = [
