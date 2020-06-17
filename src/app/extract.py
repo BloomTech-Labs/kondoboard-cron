@@ -327,10 +327,3 @@ def monster_scraper():
             cursor.close()
             connection.close()
             print("PostgreSQL connection is closed")
-
-
-def merge_all_apis():
-    #     """
-    #     Merges all of the dfs!
-    #     """
-    return pd.concat([adzuna(), jobsearcher(), monster_scraper()])

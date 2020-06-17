@@ -1,14 +1,12 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
-
-
+from .extract import adzuna, jobsearcher, monster_scraper
+from .transform import transform_df
+from .load import query
 
 app = FastAPI()
 
-from .extract import merge_all_apis
-from .transform import transform_df
-from .load import query
 
 app.add_middleware(
     CORSMiddleware,
@@ -34,7 +32,15 @@ def start_upload(): #async
     """
     Start the cron task to upload new jobs to the elasticsearch database
     """
-    df = merge_all_apis()
-    df = transform_df(df)
-    df = query(df)
+    df_adzuna = adzuna()
+    df_jobsearcher = jobsearcher()
+    df_monster = monster_scraper()
+    
+    transformed_adzuna = transform_df(df_adzuna)
+    transformed_jobsearcher = transform_df(df_jobsearcher)
+    transformed_monstser = transform_df(df_monster)
+    
+    query(transformed_adzuna)
+    query(transformed_jobsearcher)
+    query(transformed_monstser)
     return 'Cron job complete'
