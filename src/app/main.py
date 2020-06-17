@@ -36,14 +36,14 @@ def start_upload():  # async
     Start the cron task to upload new jobs to the elasticsearch database
     """
     df_adzuna = adzuna()
-    df_jobsearcher = jobsearcher()
+    #df_jobsearcher = jobsearcher()
     #df_monster = monster_scraper()
 
     transformed_adzuna = transform_df(df_adzuna)
-    transformed_jobsearcher = transform_df(df_jobsearcher)
+    #transformed_jobsearcher = transform_df(df_jobsearcher)
     #transformed_monstser = transform_df(df_monster)
 
     query(transformed_adzuna)
-    query(transformed_jobsearcher)
+    #query(transformed_jobsearcher)
     #query(transformed_monstser)
     return "Cron job complete"

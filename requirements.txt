@@ -10,6 +10,7 @@ fastapi
 psycopg2
 uvicorn
 gunicorn
+starlette
 
 
 # test requirements
