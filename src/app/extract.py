@@ -12,28 +12,28 @@ app_id = os.environ["APP_ID"]
 api_key = os.environ["API_KEY"]
 
 # credentials for monster postgres
-# DB_NAME = os.environ["DB_NAME"]
-# DB_USER = os.environ["DB_USER"]
-# DB_PASSWORD = os.environ["DB_PASSWORD"]
-# DB_HOST = os.environ["DB_HOST"]
+DB_NAME = os.environ["DB_NAME"]
+DB_USER = os.environ["DB_USER"]
+DB_PASSWORD = os.environ["DB_PASSWORD"]
+DB_HOST = os.environ["DB_HOST"]
 
 # This is where we can define the titles that we want to search for
 main_titles = [
     "data engineer",
-    # "data scientist",
-    # "data analytics",
-    # "python",
-    # "machine learning",
-    # "sql",
-    # "pandas",
-    # "front end",
-    # "back end",
-    # "full stack",
-    # "react",
-    # "angular",
-    # "vue",
-    # "software engineer",
-    # "software developer",
+    "data scientist",
+    "data analytics",
+    "python",
+    "machine learning",
+    "sql",
+    "pandas",
+    "front end",
+    "back end",
+    "full stack",
+    "react",
+    "angular",
+    "vue",
+    "software engineer",
+    "software developer",
 ]
 
 
@@ -254,76 +254,76 @@ def jobsearcher():
     return df
 
 
-# def monster_scraper():
-#     try:
-#         today = print(date.today())
-#         connection = psycopg2.connect(
-#             dbname="DB_NAME", user="DB_USER", password="DB_PASSWORD", host="DB_HOST"
-#         )
-#         print("CONNECTION:", connection)
-#         cursor = connection.cursor()
-#         print(connection.get_dsn_parameters(), "\n")
+def monster_scraper():
+    try:
+        today = print(date.today())
+        connection = psycopg2.connect(
+            dbname="DB_NAME", user="DB_USER", password="DB_PASSWORD", host="DB_HOST"
+        )
+        print("CONNECTION:", connection)
+        cursor = connection.cursor()
+        print(connection.get_dsn_parameters(), "\n")
 
-#         cursor.execute("SELECT version();")
-#         record = cursor.fetchone()
-#         print("you are connected to - ", record, "\n")
+        cursor.execute("SELECT version();")
+        record = cursor.fetchone()
+        print("you are connected to - ", record, "\n")
 
-#         query = """
-#         SELECT
-#     	    job_listings.id,
-#     	    "post_date_utc",
-#     	    "title",
-#     	    "city",
-#     	    "state_province",
-#     	    "external_url",
-#     	    job_descriptions.description,
-#     	    companies.name
-#         FROM
-#     	    job_listings
-#     	    FULL OUTER JOIN job_locations ON job_listings.id = job_locations.job_id
-#     	    FULL OUTER JOIN locations ON job_locations.location_id = locations.id
-#     	    FULL OUTER JOIN job_links ON job_listings.id = job_links.job_id
-#     	    FULL OUTER JOIN job_descriptions ON job_listings.id = job_descriptions.job_id
-#     	    FULL OUTER JOIN job_companies ON job_listings.id = job_companies.job_id
-#     	    FULL OUTER JOIN companies ON job_companies.company_id = companies.id
-#         WHERE
-#     	    "post_date_utc" > '{today}'
-#         ORDER BY
-#     	    "post_date_utc" ASC
-#             """.format(
-#             today=str(date.today())
-#         )
+        query = """
+        SELECT
+    	    job_listings.id,
+    	    "post_date_utc",
+    	    "title",
+    	    "city",
+    	    "state_province",
+    	    "external_url",
+    	    job_descriptions.description,
+    	    companies.name
+        FROM
+    	    job_listings
+    	    FULL OUTER JOIN job_locations ON job_listings.id = job_locations.job_id
+    	    FULL OUTER JOIN locations ON job_locations.location_id = locations.id
+    	    FULL OUTER JOIN job_links ON job_listings.id = job_links.job_id
+    	    FULL OUTER JOIN job_descriptions ON job_listings.id = job_descriptions.job_id
+    	    FULL OUTER JOIN job_companies ON job_listings.id = job_companies.job_id
+    	    FULL OUTER JOIN companies ON job_companies.company_id = companies.id
+        WHERE
+    	    "post_date_utc" > '{today}'
+        ORDER BY
+    	    "post_date_utc" ASC
+            """.format(
+            today=str(date.today())
+        )
 
-#         cursor.execute(query)
-#         result = cursor.fetchall()
-#         print("RESULT:", len(result))
+        cursor.execute(query)
+        result = cursor.fetchall()
+        print("RESULT:", len(result))
 
-#         job_list = []
-#         for row in result:
-#             list(row)
-#             for x in row:
-#                 x = {
-#                     "id": row[0],
-#                     "publication_date": row[1],
-#                     "title": row[2],
-#                     "title_keyword": row[2],
-#                     "city": row[3],
-#                     "state": row[4],
-#                     "post_url": row[5],
-#                     "description": row[6],
-#                     "company": row[7],
-#                 }
-#             job_list.append(x)
+        job_list = []
+        for row in result:
+            list(row)
+            for x in row:
+                x = {
+                    "id": row[0],
+                    "publication_date": row[1],
+                    "title": row[2],
+                    "title_keyword": row[2],
+                    "city": row[3],
+                    "state": row[4],
+                    "post_url": row[5],
+                    "description": row[6],
+                    "company": row[7],
+                }
+            job_list.append(x)
 
-#         df = pd.DataFrame.from_dict(job_list)
-#         df["id"] = df["id"].apply(lambda x: "MS" + str(x))
+        df = pd.DataFrame.from_dict(job_list)
+        df["id"] = df["id"].apply(lambda x: "MS" + str(x))
 
-#         return df
+        return df
 
-#     except (Exception, psycopg2.Error) as error:
-#         print("Error while connecting to PostgreSQL", error)
-#     finally:
-#         if connection:
-#             cursor.close()
-#             connection.close()
-#             print("PostgreSQL connection is closed")
+    except (Exception, psycopg2.Error) as error:
+        print("Error while connecting to PostgreSQL", error)
+    finally:
+        if connection:
+            cursor.close()
+            connection.close()
+            print("PostgreSQL connection is closed")

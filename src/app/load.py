@@ -25,7 +25,7 @@ awsauth = AWS4Auth(
 es = Elasticsearch(
     send_get_body_as="POST",
     hosts=[host],
-    #http_auth=awsauth,
+    http_auth=awsauth,
     use_ssl=True,
     verify_certs=True,
     connection_class=RequestsHttpConnection,
@@ -54,4 +54,4 @@ def gendata(df):
 
 def query(df):
 
-    return(bulk(es, gendata(df)))
+    return bulk(es, gendata(df))
