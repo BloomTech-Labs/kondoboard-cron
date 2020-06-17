@@ -1,3 +1,7 @@
+import os
+import logging
+import time
+
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -7,6 +11,8 @@ from .transform import transform_df
 from .load import query
 
 app = FastAPI()
+logging.info("=" * 50)
+logging.info("Starting FastAPI")
 
 
 app.add_middleware(

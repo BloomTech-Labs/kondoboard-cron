@@ -3,6 +3,8 @@ import os
 import requests
 import pandas as pd
 from flatten_dict import flatten
+import os
+
 import psycopg2
 from datetime import date
 
@@ -194,8 +196,13 @@ def jobsearcher():
 
             offset += 100
             result = request.json()
-
+            
+            total_results = result["total"]
+            logging.info(f"{total_results}")
+            
             x = len(result["data"])
+            logging.info(f"Len of result[data] {x}")
+
             # flatten nested objects
             flattened_results = [
                 flatten(job, reducer="underscore") for job in result["data"]
