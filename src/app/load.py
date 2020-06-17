@@ -57,15 +57,6 @@ def gendata(df):
 
 
 def query(df):
-
     print(df)
-    logging.info(df.head())
-    logging.info(
-            f"df head: {df.head()}"
-        )
-    logging.info(
-            f"df shape: {df.shape()}"
-        )
-    logging.info(
-            f"bulk es gendata: {bulk(es, gendata(df))}"
-        )
+    logging.info(df)
+    logging.info(bulk(es, gendata(df)))

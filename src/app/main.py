@@ -40,18 +40,18 @@ async def root():
 
 @app.get("/start")
 def start_upload(): #async 
-    """
-    Start the cron task to upload new jobs to the elasticsearch database
-    """
+	"""
+	Start the cron task to upload new jobs to the elasticsearch database
+	"""
 	logging.info("=" * 50)
 	logging.info("/start endpoint has been hit")
-    df = merge_all_apis()
+	df = merge_all_apis()
 	logging.info("merge_all_api completed successfully")
-    df = transform_df(df)
+	df = transform_df(df)
 	logging.info("transform completed successfully")
-    df = query(df)
+	df = query(df)
 	logging.info("query and job upload completed successfully")
-    return 'Cron job complete'
+	return 'Cron job complete'
 
 
 @app.get("/logs")
