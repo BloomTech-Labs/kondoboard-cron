@@ -55,12 +55,12 @@ def start_upload():
         try:
             # extract
             df = v["extract_func"]()
-            logging.info(f"{k} extraced layer complete")
+            logging.info(f"{k} extract layer complete")
             # transform
             transformed_df = transform_df(df)
             logging.info(f"{k} transform layer complete")
             # load
             query(transformed_df)
-            logging.info(f"{k} loaded layer complete")
+            logging.info(f"{k} load layer complete")
         except Exception:
             logging.error(f"{k} unable to complete")
