@@ -1,12 +1,6 @@
 import os
 import logging
 import time
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-formatter.converter = time.gmtime
-console_handler = logging.StreamHandler()
-console_handler.setFormatter(formatter)
-handlers = [console_handler]
-logging.basicConfig(handlers=handlers)
 
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
@@ -16,13 +10,12 @@ from .extract import merge_all_apis
 from .transform import transform_df
 from .load import query
 
-# from .log import start_log, get_log, tail_log
-
-# start_log(get_log(__file__))
-# APP_LOG = logging.getLogger(__name__)
-# APP_LOG.info('Creating app...')
+logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(name)s:%(message)s")
 
 app = FastAPI()
+logging.info("=" * 50)
+logging.info("Starting FastAPI")
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -31,13 +24,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-# werkzeug_logger = logging.getLogger('werkzeug')
-# for handler in APP_LOG.handlers:
-# 	werkzeug_logger.addHandler(handler)
-# 	application.logger.addHandler(handler)
-
 
 @app.get("/")
 async def root():
@@ -57,9 +43,14 @@ def start_upload(): #async
     """
     Start the cron task to upload new jobs to the elasticsearch database
     """
+	logging.info("=" * 50)
+	logging.info("/start endpoint has been hit")
     df = merge_all_apis()
+	logging.info("merge_all_api completed successfully")
     df = transform_df(df)
+	logging.info("transform completed successfully")
     df = query(df)
+	logging.info("query and job upload completed successfully")
     return 'Cron job complete'
 
 
@@ -68,24 +59,9 @@ def logs():
 	"""
 	Gets the last n lines of a given log
 	"""
-	APP_LOG.info(f'/logs called with args {request.args}')
-	logfile = request.args.get('file', None)
-	lines = request.args.get('lines', 1000)
-
-	if logfile is None:
-		return('''
-		<pre>
-			Parameters:
-				file: The file to get logs for
-					Required
-					Usually one of either application.py or run_scrapers.py
-				lines: Number of lines to get
-					Defaults to 1000
-		</pre>
-		''')
-
-	try:
-		res = tailLogFile(logfile, n_lines=lines)
-		return (f'<pre>{res}</pre>')
-	except Exception as e:
-		return(f'Exception {type(e)} getting logs: {e}')
+	return HTMLResponse("""
+    <h1>Log File Page</h1>
+    <br>
+	Application logs: <a href="/logs?file=main.py&amp;lines=50">/logs?file=main.py</a>
+    """)
+	

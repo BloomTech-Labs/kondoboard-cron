@@ -1,3 +1,4 @@
+import logging
 import json
 import requests
 import os
@@ -5,6 +6,9 @@ from requests_aws4auth import AWS4Auth
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 from elasticsearch.helpers import bulk
 import boto3
+
+logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(name)s:%(message)s")
+
 
 app_id = os.environ["APP_ID"]
 api_key = os.environ["API_KEY"]
@@ -55,4 +59,13 @@ def gendata(df):
 def query(df):
 
     print(df)
-    #print(bulk(es, gendata(df)))
+    logging.info(df.head())
+    logging.info(
+            f"df head: {df.head()}"
+        )
+    logging.info(
+            f"df shape: {df.shape()}"
+        )
+    logging.info(
+            f"bulk es gendata: {bulk(es, gendata(df))}"
+        )

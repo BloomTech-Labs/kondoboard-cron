@@ -1,6 +1,4 @@
 import logging
-logger = logging.getLogger(__name__)
-
 import requests
 import pandas as pd
 from flatten_dict import flatten
