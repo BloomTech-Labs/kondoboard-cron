@@ -54,5 +54,4 @@ def gendata(df):
 
 def query(df):
 
-    print(df)
-    #print(bulk(es, gendata(df)))
+    return bulk(es, gendata(df))

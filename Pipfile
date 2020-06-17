@@ -21,6 +21,8 @@ pytest-cov = "*"
 fastapi = "*"
 uvicorn = "*"
 gunicorn = "*"
+psycopg2 = "*"
+starlette = "*"
 
 [requires]
 python_version = "3.7"
