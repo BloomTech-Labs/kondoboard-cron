@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+import logging
 from .extract import adzuna, jobsearcher, monster_scraper
 from .transform import transform_df
 from .load import query
@@ -16,6 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(name)s:%(message)s")
 
 @app.get("/")
 async def root():
@@ -31,19 +33,34 @@ async def root():
 
 
 @app.get("/start")
-def start_upload():  # async
+def start_upload():
     """
     Start the cron task to upload new jobs to the elasticsearch database
     """
-    df_adzuna = adzuna()
-    df_jobsearcher = jobsearcher()
-    df_monster = monster_scraper()
 
-    transformed_adzuna = transform_df(df_adzuna)
-    transformed_jobsearcher = transform_df(df_jobsearcher)
-    transformed_monstser = transform_df(df_monster)
+    sources ={
+        "adzuna":{
+            "extract_func": adzuna,
+       },
+       "jobsearcher":{
+           "extract_func": jobsearcher,
+       },
+       "monster":{
+           "extract_func": monster_scraper
+       }
+    }
 
-    query(transformed_adzuna)
-    query(transformed_jobsearcher)
-    query(transformed_monstser)
-    return "Cron job complete"
+    for k, v in sources.items():
+        print(k)
+        try:
+            # extract
+            df = v["extract_func"]()
+            logging.info(f"{k} extract layer complete")
+            # transform
+            transformed_df = transform_df(df)
+            logging.info(f"{k} transform layer complete")
+            # load
+            query(transformed_df)
+            logging.info(f"{k} load layer complete")
+        except Exception:
+            logging.error(f"{k} unable to complete")
