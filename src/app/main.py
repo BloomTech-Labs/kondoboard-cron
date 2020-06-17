@@ -17,6 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(name)s:%(message)s")
 
 @app.get("/")
 async def root():
@@ -54,12 +55,12 @@ def start_upload():
         try:
             # extract
             df = v["extract_func"]()
-            print("extracted")
+            logging.info(f"{k} extraced layer complete")
             # transform
             transformed_df = transform_df(df)
-            print("transformed")
+            logging.info(f"{k} transform layer complete")
             # load
             query(transformed_df)
-            print("loaded")
+            logging.info(f"{k} loaded layer complete")
         except Exception:
-            print("nope")
+            logging.error(f"{k} unable to complete")
