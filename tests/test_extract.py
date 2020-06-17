@@ -1,4 +1,4 @@
-from src.app.extract import adzuna, jobsearcher
+from src.app.extract import adzuna, jobsearcher #, monster_scraper
 import pandas as pd
 
 def test_adzuna():
@@ -34,3 +34,20 @@ def test_jobsearcher():
         "city",
         "state"
     ]
+
+# def test_monster():
+#     df = monster_scraper()
+#     assert list(df.columns) == [
+#         "id",
+#         "post_url",
+#         "title",
+#         "title_keyword",
+#         "tags",
+#         "description",
+#         "company",
+#         "publication_date",
+#         "latitude",
+#         "longitude",
+#         "city",
+#         "state"
+#     ]
