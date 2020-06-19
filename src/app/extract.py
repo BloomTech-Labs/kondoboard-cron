@@ -263,9 +263,8 @@ def jobsearcher():
 
 def monster_scraper():
     try:
-        today = print(date.today())
         connection = psycopg2.connect(
-            dbname="DB_NAME", user="DB_USER", password="DB_PASSWORD", host="DB_HOST"
+            dbname=DB_NAME, user=DB_USER, password=DB_PASSWORD, host=DB_HOST
         )
         print("CONNECTION:", connection)
         cursor = connection.cursor()
