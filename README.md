@@ -3,7 +3,6 @@
 This repo contains the extract, transform, load application for Kondoboard, a platform that allows Lambda School students to browse, save, and track job postings during the job hunt. 
 
 ## Table of Contents
-- [Background](#background)
 - [Diagrams](#diagrams)
 - [Install](#install) 
 - [Usage](#usage)
@@ -11,9 +10,6 @@ This repo contains the extract, transform, load application for Kondoboard, a pl
 - [API](#api)
 - [License](#license)
 
-## Background
-```
-```
 
 ## Diagrams
 We created C4 diagrams to communicate the software architecture
@@ -25,12 +21,15 @@ We created C4 diagrams to communicate the software architecture
 
 ## Install  
 ```
+pip install -r requirements.txt
 ```
 ## Usage  
 ```
+uvicorn main:app --reload
 ```  
 ## Testing  
 ```
+pytest
 ```  
 ## API
 
