@@ -9,7 +9,6 @@ import boto3
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s:%(name)s:%(message)s")
 
-
 app_id = os.environ["APP_ID"]
 api_key = os.environ["API_KEY"]
 
@@ -17,6 +16,20 @@ host = os.environ["AWS_ENDPOINT"]
 region = os.environ["REGION"]
 service = "es"
 
+
+# There are two connection methods for connecting to the elasticsearch database
+# 1. Running live inside aws elastic beanstalk 
+#   - credentials are handled via instance roles attached to the ec2 instance
+# 2. Running local for testing and development
+#   - credentials are handled via a token system with expiration, verified with your 
+#   - individual access_key and secret_key configured through the awsebcli
+# assure the appropriate connection method is uncommented 
+
+
+# *************************************************
+# 1. Running live inside aws elastic beanstalk
+
+# Elasticsearch connection method 1 BEGIN
 class AssumeRoleAWS4Auth(AWS4Auth):
     """
     Subclass of AWS4Auth which accepts botocore credentials as its first argument
@@ -64,7 +77,6 @@ class AssumeRoleAWS4Auth(AWS4Auth):
             secret_key=frozen_credentials.secret_key
         )
 
-
 session = boto3.Session()
 credentials = session.get_credentials()
 awsauth = AssumeRoleAWS4Auth(credentials, region, service)
@@ -76,9 +88,13 @@ es = Elasticsearch(
     verify_certs=True,
     connection_class=RequestsHttpConnection,
 )
+# Elasticsearch connection method 1 END
 
-# This is the previous connection method
-# service = "es"
+
+# *************************************************
+# 2. Running local for testing and development
+
+# Elasticsearch connection method 2 BEGIN
 # credentials = boto3.Session().get_credentials()
 # awsauth = AWS4Auth(
 #     credentials.access_key,
@@ -96,6 +112,7 @@ es = Elasticsearch(
 #     verify_certs=True,
 #     connection_class=RequestsHttpConnection,
 # )
+# Elasticsearch connection method 2 END
 
 
 def gendata(df):
